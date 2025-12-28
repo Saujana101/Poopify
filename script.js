@@ -134,4 +134,45 @@ function renderInsight() {
     waterLevelEl.style.width = "30%";
     fiberLevelEl.style.width = "30%";
   } else if (last3.every(x => x >= 6)) {
-    gutStatusEl.innerText = "Pencerna
+    gutStatusEl.innerText = "Pencernaan terlalu lembek";
+    insightTextEl.innerText = "Kurangi air & perbanyak makanan padat 🍌";
+    waterLevelEl.style.width = "80%";
+    fiberLevelEl.style.width = "80%";
+  } else {
+    gutStatusEl.innerText = "Usus sehat & stabil";
+    insightTextEl.innerText = "Good job! 💚";
+    waterLevelEl.style.width = "60%";
+    fiberLevelEl.style.width = "60%";
+  }
+}
+
+// RENDER CHART
+function renderChart() {
+  const ctx = document.getElementById("poopChart").getContext("2d");
+  const labels = [...new Set(data.map(d => d.date))];
+  const chartData = labels.map(label => {
+    const types = data.filter(d => d.date === label).map(d => d.type);
+    return types.length ? types.at(-1) : 0;
+  });
+
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Tipe Pup',
+        data: chartData,
+        backgroundColor: '#4CAF50'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, min: 0, max: 7, stepSize: 1 } }
+    }
+  });
+}
+
+// render saat load
+render();
