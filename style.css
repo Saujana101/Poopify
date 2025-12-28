@@ -7,6 +7,7 @@
   --text-muted: #666;
   --shadow: rgba(0,0,0,0.08);
   --accent: #A5D6A7;
+  --accent-hover: #81c784;
 }
 
 * {
@@ -18,8 +19,10 @@ body {
   background: var(--bg);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }
 
+/* APP CONTAINER */
 .app {
   max-width: 430px;
   margin: auto;
@@ -50,11 +53,13 @@ header h1 {
   padding: 16px;
   margin-top: 16px;
   box-shadow: 0 6px 18px var(--shadow);
-  transition: transform 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px var(--shadow);
 }
 
 /* SUMMARY */
@@ -67,13 +72,15 @@ header h1 {
 .summary-item {
   text-align: center;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 12px;
-  transition: background 0.2s;
+  padding: 12px 16px;
+  border-radius: 14px;
+  transition: background 0.25s, transform 0.15s;
+  user-select: none;
 }
 
 .summary-item:hover {
   background: rgba(165, 214, 167, 0.3);
+  transform: translateY(-2px);
 }
 
 .summary-item span {
@@ -97,11 +104,12 @@ input, select {
   border-radius: 12px;
   border: 1px solid #ccc;
   font-size: 14px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus, select:focus {
   border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
   outline: none;
 }
 
@@ -117,16 +125,18 @@ button {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
 
 button:hover {
   background: #43A047;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 button:active {
   transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 button.secondary {
@@ -174,6 +184,7 @@ button.secondary:hover {
   border-radius: 12px;
   height: 10px;
   position: relative;
+  overflow: hidden;
 }
 
 .bar span {
@@ -182,7 +193,7 @@ button.secondary:hover {
   background: var(--green);
   border-radius: 12px;
   width: 0;
-  transition: width 0.3s ease;
+  transition: width 0.5s ease;
 }
 
 /* QUICK TIPS */
@@ -198,10 +209,12 @@ button.secondary:hover {
   color: var(--text);
   font-weight: 500;
   border-radius: 12px;
+  transition: background 0.2s, transform 0.15s;
 }
 
 .insight-tips button:hover {
-  background: #81c784;
+  background: var(--accent-hover);
+  transform: translateY(-1px);
 }
 
 /* REMINDER */
