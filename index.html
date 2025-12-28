@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>PoopTrack 🌿</title>
 
   <!-- PWA -->
@@ -19,79 +19,175 @@
 </head>
 
 <body>
-<div class="app">
+<main class="app flo-ui" role="application">
 
-  <header>
+  <!-- HEADER -->
+  <header class="app-header">
     <h1>🌿 PoopTrack</h1>
-    <p class="subtitle">daily poop • healthy gut</p>
+    <p class="subtitle">care for your gut, gently 💚</p>
   </header>
 
   <!-- SUMMARY -->
   <section class="card summary">
-    <div class="summary-item">
-      <span id="todayCount">0</span>
-      <small>🚽 Hari ini</small>
-    </div>
-    <div class="summary-item">
-      <span id="avgType">-</span>
-      <small>💩 Tipe</small>
-    </div>
+    <button class="summary-item" type="button">
+      <span class="icon">🚽</span>
+      <div>
+        <strong id="todayCount">0</strong>
+        <small>Hari ini</small>
+      </div>
+    </button>
+
+    <button class="summary-item" type="button">
+      <span class="icon">💩</span>
+      <div>
+        <strong id="avgType">-</strong>
+        <small>Tipe dominan</small>
+      </div>
+    </button>
   </section>
 
   <!-- CHART -->
-  <section class="card">
-    <h2>📊 Mingguan</h2>
-    <canvas id="poopChart"></canvas>
+  <section class="card chart-card">
+    <h2>📊 Aktivitas Mingguan</h2>
+    <div class="chart-wrapper">
+      <canvas id="poopChart"></canvas>
+    </div>
   </section>
 
   <!-- INPUT -->
-  <section class="card">
-    <h2>📝 Catat Pup</h2>
+  <section class="card form-card">
+    <h2>📝 Catat Hari Ini</h2>
 
-    <label>Tanggal</label>
-    <input type="date" id="date">
+    <div class="form-group">
+      <label for="date">
+        <span class="icon">📅</span>
+        Tanggal
+      </label>
+      <input type="date" id="date" required>
+    </div>
 
-    <label>Bristol Type</label>
-    <select id="type">
-      <option value="1">Type 1 (keras)</option>
-      <option value="2">Type 2</option>
-      <option value="3">Type 3</option>
-      <option value="4">Type 4 (ideal)</option>
-      <option value="5">Type 5</option>
-      <option value="6">Type 6</option>
-      <option value="7">Type 7 (cair)</option>
-    </select>
+    <div class="form-group">
+      <label for="type">
+        <span class="icon">🧻</span>
+        Bristol Type
+      </label>
+      <div class="select-wrapper">
+        <select id="type" required>
+          <option value="1">🥜 Type 1 — keras</option>
+          <option value="2">🪨 Type 2 — agak keras</option>
+          <option value="3">🌭 Type 3 — normal</option>
+          <option value="4">🍌 Type 4 — ideal</option>
+          <option value="5">🥥 Type 5 — lembek</option>
+          <option value="6">🥣 Type 6 — sangat lembek</option>
+          <option value="7">💦 Type 7 — cair</option>
+        </select>
+      </div>
+    </div>
 
-    <button id="saveBtn">💾 Simpan</button>
+    <button id="saveBtn" class="primary-btn" type="button">
+      💾 Simpan Catatan
+    </button>
   </section>
 
   <!-- INSIGHT -->
-  <section class="card insight">
-    <h2>🧠 Insight</h2>
-    <p id="insightText">Belum ada data</p>
+  <section class="card insight" aria-live="polite">
+    <h2>🧠 Insight Kamu</h2>
+
+    <div class="insight-status">
+      <span class="emoji">🌿</span>
+      <div>
+        <strong id="gutStatus">Usus kamu aman & chill</strong>
+        <small id="insightText">Belum ada data, yuk mulai catat 💚</small>
+      </div>
+    </div>
+
+    <div class="insight-meter">
+      <div class="meter-item">
+        <span>💧</span>
+        <small>Hidrasi</small>
+        <div class="bar">
+          <span id="waterLevel"></span>
+        </div>
+      </div>
+
+      <div class="meter-item">
+        <span>🥦</span>
+        <small>Serat</small>
+        <div class="bar">
+          <span id="fiberLevel"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-tips">
+      <button type="button">💧 Minum air</button>
+      <button type="button">🥦 Tambah serat</button>
+      <button type="button">🚶 Jalan santai</button>
+    </div>
   </section>
 
   <!-- REMINDER -->
-  <section class="card">
-    <h2>⏰ Reminder</h2>
-    <button id="remindPup">🚽 Ingatkan Pup</button>
-    <button class="secondary" id="remindDrink">💧 Ingatkan Minum</button>
+  <section class="card reminder-card">
+    <h2>⏰ Pengingat Lembut</h2>
+
+    <div class="reminder-item">
+      <div class="reminder-info">
+        <span class="emoji">🚽</span>
+        <div>
+          <strong>Waktu Pup</strong>
+          <small>ingatkan tubuhmu tanpa maksa</small>
+        </div>
+      </div>
+      <div class="reminder-action">
+        <input type="time" id="pupTime">
+        <button id="remindPup" class="primary-btn" type="button">
+          Aktifkan
+        </button>
+      </div>
+    </div>
+
+    <div class="reminder-item">
+      <div class="reminder-info">
+        <span class="emoji">💧</span>
+        <div>
+          <strong>Minum Air</strong>
+          <small>biar pup kamu happy</small>
+        </div>
+      </div>
+      <div class="reminder-action">
+        <select id="drinkInterval">
+          <option value="60">⏱️ tiap 1 jam</option>
+          <option value="90">⏱️ tiap 1,5 jam</option>
+          <option value="120">⏱️ tiap 2 jam</option>
+        </select>
+        <button id="remindDrink" class="secondary-btn" type="button">
+          Aktifkan
+        </button>
+      </div>
+    </div>
+
+    <div class="reminder-affirmation">
+      🌱 kamu ga malas, tubuhmu cuma butuh diingatkan
+    </div>
   </section>
 
   <!-- HISTORY -->
-  <section class="card">
+  <section class="card history-card">
     <h2>📜 Riwayat</h2>
     <ul id="history"></ul>
   </section>
 
-</div>
+</main>
 
-<script src="script.js"></script>
+<!-- SCRIPT -->
+<script src="script.js" defer></script>
 
 <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("service-worker.js");
+    });
+  }
 </script>
 
 </body>
