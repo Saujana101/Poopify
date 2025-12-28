@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PoopTrack 🌿</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4CAF50">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- STYLE -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- CHART -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+<div class="app">
+
+  <header>
+    <h1>🌿 PoopTrack</h1>
+    <p class="subtitle">daily poop • healthy gut</p>
+  </header>
+
+  <!-- SUMMARY -->
+  <section class="card summary">
+    <div class="summary-item">
+      <span id="todayCount">0</span>
+      <small>🚽 Hari ini</small>
+    </div>
+    <div class="summary-item">
+      <span id="avgType">-</span>
+      <small>💩 Tipe</small>
+    </div>
+  </section>
+
+  <!-- CHART -->
+  <section class="card">
+    <h2>📊 Mingguan</h2>
+    <canvas id="poopChart"></canvas>
+  </section>
+
+  <!-- INPUT -->
+  <section class="card">
+    <h2>📝 Catat Pup</h2>
+
+    <label>Tanggal</label>
+    <input type="date" id="date">
+
+    <label>Bristol Type</label>
+    <select id="type">
+      <option value="1">Type 1 (keras)</option>
+      <option value="2">Type 2</option>
+      <option value="3">Type 3</option>
+      <option value="4">Type 4 (ideal)</option>
+      <option value="5">Type 5</option>
+      <option value="6">Type 6</option>
+      <option value="7">Type 7 (cair)</option>
+    </select>
+
+    <button id="saveBtn">💾 Simpan</button>
+  </section>
+
+  <!-- INSIGHT -->
+  <section class="card insight">
+    <h2>🧠 Insight</h2>
+    <p id="insightText">Belum ada data</p>
+  </section>
+
+  <!-- REMINDER -->
+  <section class="card">
+    <h2>⏰ Reminder</h2>
+    <button id="remindPup">🚽 Ingatkan Pup</button>
+    <button class="secondary" id="remindDrink">💧 Ingatkan Minum</button>
+  </section>
+
+  <!-- HISTORY -->
+  <section class="card">
+    <h2>📜 Riwayat</h2>
+    <ul id="history"></ul>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>
