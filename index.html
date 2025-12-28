@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>PoopTrack 🌿</title>
 
   <!-- PWA -->
@@ -15,24 +15,23 @@
   <link rel="stylesheet" href="style.css">
 
   <!-- CHART -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
   <style>
     /* pastikan semua tombol & select bisa diklik */
     button, select, input[type="date"], input[type="time"] {
       cursor: pointer;
-      z-index: 1;
       position: relative;
+      z-index: 2;
     }
 
-    /* optional: perbaiki overflow/overlay card */
+    /* card overlay fix */
     .card {
       position: relative;
       overflow: visible;
     }
   </style>
 </head>
-
 <body>
 <main class="app flo-ui" role="application">
 
@@ -44,7 +43,7 @@
 
   <!-- SUMMARY -->
   <section class="card summary">
-    <button class="summary-item" type="button" onclick="alert('Hari ini clicked!')">
+    <button class="summary-item" type="button" aria-label="Hari ini">
       <span class="icon">🚽</span>
       <div>
         <strong id="todayCount">0</strong>
@@ -52,7 +51,7 @@
       </div>
     </button>
 
-    <button class="summary-item" type="button" onclick="alert('Tipe dominan clicked!')">
+    <button class="summary-item" type="button" aria-label="Tipe dominan">
       <span class="icon">💩</span>
       <div>
         <strong id="avgType">-</strong>
@@ -65,7 +64,7 @@
   <section class="card chart-card">
     <h2>📊 Aktivitas Mingguan</h2>
     <div class="chart-wrapper">
-      <canvas id="poopChart"></canvas>
+      <canvas id="poopChart" width="400" height="200"></canvas>
     </div>
   </section>
 
@@ -78,4 +77,122 @@
         <span class="icon">📅</span>
         Tanggal
       </label>
-      <
+      <input type="date" id="date" required>
+    </div>
+
+    <div class="form-group">
+      <label for="type">
+        <span class="icon">🧻</span>
+        Bristol Type
+      </label>
+      <select id="type" required>
+        <option value="">Pilih tipe</option>
+        <option value="1">🥜 Type 1 — keras</option>
+        <option value="2">🪨 Type 2 — agak keras</option>
+        <option value="3">🌭 Type 3 — normal</option>
+        <option value="4">🍌 Type 4 — ideal</option>
+        <option value="5">🥥 Type 5 — lembek</option>
+        <option value="6">🥣 Type 6 — sangat lembek</option>
+        <option value="7">💦 Type 7 — cair</option>
+      </select>
+    </div>
+
+    <button id="saveBtn" class="primary-btn" type="button">
+      💾 Simpan Catatan
+    </button>
+  </section>
+
+  <!-- INSIGHT -->
+  <section class="card insight" aria-live="polite">
+    <h2>🧠 Insight Kamu</h2>
+
+    <div class="insight-status">
+      <span class="emoji">🌿</span>
+      <div>
+        <strong id="gutStatus">Usus kamu aman & chill</strong>
+        <small id="insightText">Belum ada data, yuk mulai catat 💚</small>
+      </div>
+    </div>
+
+    <div class="insight-meter">
+      <div class="meter-item">
+        <span>💧</span>
+        <small>Hidrasi</small>
+        <div class="bar"><span id="waterLevel"></span></div>
+      </div>
+      <div class="meter-item">
+        <span>🥦</span>
+        <small>Serat</small>
+        <div class="bar"><span id="fiberLevel"></span></div>
+      </div>
+    </div>
+
+    <div class="insight-tips">
+      <button type="button">💧 Minum air</button>
+      <button type="button">🥦 Tambah serat</button>
+      <button type="button">🚶 Jalan santai</button>
+    </div>
+  </section>
+
+  <!-- REMINDER -->
+  <section class="card reminder-card">
+    <h2>⏰ Pengingat Lembut</h2>
+
+    <div class="reminder-item">
+      <div class="reminder-info">
+        <span class="emoji">🚽</span>
+        <div>
+          <strong>Waktu Pup</strong>
+          <small>ingatkan tubuhmu tanpa maksa</small>
+        </div>
+      </div>
+      <div class="reminder-action">
+        <input type="time" id="pupTime">
+        <button id="remindPup" class="primary-btn" type="button">Aktifkan</button>
+      </div>
+    </div>
+
+    <div class="reminder-item">
+      <div class="reminder-info">
+        <span class="emoji">💧</span>
+        <div>
+          <strong>Minum Air</strong>
+          <small>biar pup kamu happy</small>
+        </div>
+      </div>
+      <div class="reminder-action">
+        <select id="drinkInterval">
+          <option value="60">⏱️ tiap 1 jam</option>
+          <option value="90">⏱️ tiap 1,5 jam</option>
+          <option value="120">⏱️ tiap 2 jam</option>
+        </select>
+        <button id="remindDrink" class="secondary-btn" type="button">Aktifkan</button>
+      </div>
+    </div>
+
+    <div class="reminder-affirmation">
+      🌱 kamu ga malas, tubuhmu cuma butuh diingatkan
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section class="card history-card">
+    <h2>📜 Riwayat</h2>
+    <ul id="history"></ul>
+  </section>
+
+</main>
+
+<!-- SCRIPT -->
+<script src="script.js" defer></script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("service-worker.js");
+    });
+  }
+</script>
+
+</body>
+</html>
