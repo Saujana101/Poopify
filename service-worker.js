@@ -1,12 +1,12 @@
 const CACHE = "pooptrack-v1";
 const FILES = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./script.js",
-  "./manifest.json",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "/",
+  "/index.html",
+  "/style.css",
+  "/script.js",
+  "/manifest.json",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png"
 ];
 
 // Install → cache semua file
@@ -28,22 +28,24 @@ self.addEventListener("activate", e => {
   self.clients.claim();
 });
 
-// Fetch → cache-first dengan fallback
+// Fetch → cache-first dengan fallback ke index.html
 self.addEventListener("fetch", e => {
-  if (FILES.includes(new URL(e.request.url).pathname)) {
+  const requestPath = new URL(e.request.url).pathname;
+
+  if (FILES.includes(requestPath)) {
     e.respondWith(
       caches.open(CACHE).then(cache =>
         cache.match(e.request).then(resp =>
           resp || fetch(e.request).then(r => {
             cache.put(e.request, r.clone());
             return r;
-          })
+          }).catch(() => resp) // fallback ke cache jika offline
         )
       )
     );
   } else {
     e.respondWith(
-      fetch(e.request).catch(() => caches.match("./"))
+      fetch(e.request).catch(() => caches.match("/index.html"))
     );
   }
 });
