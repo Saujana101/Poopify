@@ -3,12 +3,21 @@
   --brown: #8D6E63;
   --bg: #f6f8f5;
   --card: #ffffff;
+  --text: #333;
+  --text-muted: #666;
+  --shadow: rgba(0,0,0,0.08);
+  --accent: #A5D6A7;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   background: var(--bg);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
 }
 
 .app {
@@ -17,70 +26,236 @@ body {
   padding: 16px;
 }
 
+/* HEADER */
 header {
   text-align: center;
+  margin-bottom: 8px;
+}
+
+header h1 {
+  font-size: 24px;
+  margin: 0;
 }
 
 .subtitle {
   font-size: 13px;
-  opacity: 0.7;
+  color: var(--text-muted);
+  margin-top: 4px;
 }
 
+/* CARD */
 .card {
   background: var(--card);
   border-radius: 18px;
   padding: 16px;
   margin-top: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px var(--shadow);
+  transition: transform 0.15s ease;
 }
 
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* SUMMARY */
 .summary {
   display: flex;
   justify-content: space-around;
   background: linear-gradient(135deg, #E8F5E9, #EFEBE9);
 }
 
-.summary-item span {
-  font-size: 28px;
-  font-weight: bold;
+.summary-item {
+  text-align: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: background 0.2s;
 }
 
+.summary-item:hover {
+  background: rgba(165, 214, 167, 0.3);
+}
+
+.summary-item span {
+  display: block;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+/* FORM */
 label {
   display: block;
-  margin-top: 10px;
+  margin-top: 12px;
+  font-weight: 500;
 }
 
 input, select {
   width: 100%;
-  padding: 10px;
+  padding: 10px 12px;
+  margin-top: 6px;
   border-radius: 12px;
   border: 1px solid #ccc;
+  font-size: 14px;
+  transition: border-color 0.2s;
 }
 
+input:focus, select:focus {
+  border-color: var(--green);
+  outline: none;
+}
+
+/* BUTTONS */
 button {
   width: 100%;
-  margin-top: 12px;
-  padding: 12px;
+  margin-top: 14px;
+  padding: 14px;
   border-radius: 14px;
   border: none;
   background: var(--green);
   color: white;
   font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+button:hover {
+  background: #43A047;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 button.secondary {
   background: var(--brown);
 }
 
+button.secondary:hover {
+  background: #7B5E57;
+}
+
+/* INSIGHT */
 .insight {
   background: #E8F5E9;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.insight-status {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
-li {
+.insight-status .emoji {
+  font-size: 28px;
+  margin-right: 12px;
+}
+
+.insight-meter {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.meter-item {
+  flex: 1;
+}
+
+.meter-item small {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-muted);
+}
+
+.bar {
+  background: #dcedc8;
+  border-radius: 12px;
+  height: 10px;
+  position: relative;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+  border-radius: 12px;
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+/* QUICK TIPS */
+.insight-tips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.insight-tips button {
+  flex: 1;
+  background: var(--accent);
+  color: var(--text);
+  font-weight: 500;
+  border-radius: 12px;
+}
+
+.insight-tips button:hover {
+  background: #81c784;
+}
+
+/* REMINDER */
+.reminder-card .reminder-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.reminder-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reminder-info .emoji {
+  font-size: 24px;
+}
+
+.reminder-affirmation {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* HISTORY */
+.history-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-card li {
   margin-bottom: 6px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* CHART */
+.chart-wrapper {
+  overflow-x: auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .app {
+    padding: 12px;
+  }
+  header h1 {
+    font-size: 22px;
+  }
+  .summary-item span {
+    font-size: 24px;
+  }
 }
